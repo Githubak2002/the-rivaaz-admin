@@ -2,10 +2,24 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import useUserStore from "@/lib/store";
+// import useUserStore from "@/lib/store";
 import toast from "react-hot-toast";
+import axios from "axios";
+
+import { useAuth } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
+
 
 export default function Home() {
+
+  const { userId } = useAuth();
+
+  // if (userId) {
+  //   console.log("user_id → ",userId);
+  // }
+
+  const { isLoaded, isSignedIn, user } = useUser()
+  // console.log("User details → ",user);
 
   const router = useRouter();
 
@@ -13,8 +27,8 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
+  // const user = useUserStore((state) => state.user);
+  // const setUser = useUserStore((state) => state.setUser);
   
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -35,52 +49,18 @@ export default function Home() {
   //   }
   // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-          body: JSON.stringify({ email, password }),
-      });
-      //  Parse the JSON response
-      const data = await response.json();
-      // console.log("response data → ", data);
-      if (data.success) {
-        setUser(email);
-        router.push('/protected');
-        toast.success("Login successfull!");
-        setEmail("");
-        setPassword("");
-        // console.log("Login successful:", data.msg);
-      }
-      else {
-        setEmail("");
-        setPassword("");
-        toast.error(`Login failed: ${data.msg}`)
-        // console.log("Login failed:", data.msg);
-      }
-    }
-    catch(err){
-      // toast.error(err);
-      console.log("error → ",err);
-    }
-    finally{
-      setLoading(false)
-    }
-  }
 
   return (
     <section className="flexCenter flex-col h-[80vh]">
       {/* <h2>Main page</h2> */}
-      <Link href="/protected" className=" text-blue-500">
-        protected route
-      </Link>
 
-      <section className="mx-auto px-4 flexCenter flex-col gap-6">
+      <section className="mx-auto px-4 flexCenter flex-col gap-6 text-3xl font-bold">
+
+
+        <h2>Wecome to The Rivaaz</h2>
+        <h2>Style with Rivaaz</h2>
+
+        {/* 
         <main className="sm:min-w-[340px] min-w-full shadow-2xl py-6 px-10 border-2 border-gray-300 mt-[5vh] rounded-xl font-bold text-sm">
           <form 
           onSubmit={handleSubmit}
@@ -124,11 +104,7 @@ export default function Home() {
           
           </form>
         </main>
-
-        {/* <div className="text-sm text-[#9f9f9f] flex flex-col gap-2">
-          <h2>Email → ok@ c.com</h2>
-          <h2>Password → 123</h2>
-        </div> */}
+         */}
 
       </section>
     </section>

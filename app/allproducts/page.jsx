@@ -1,28 +1,28 @@
-"use client";
+'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import useUserStore from '@/lib/store';
+import { isAdmin } from '@/hooks/useCheckAdmin';
+
 
 const Page = () => {
+  const isUserAdmin = isAdmin();
   const router = useRouter();
-  const user = useUserStore((state) => state.user); // Correctly fetch user from the Zustand store
 
   useEffect(() => {
-    // console.log("User email: ", user);
-    if (user === null) {
+    if (!isUserAdmin) {
       router.push('/'); 
-    }
-  }, [user, router]);
+    } 
+  }, [isUserAdmin, router]); // Add dependencies to ensure useEffect runs when isUserAdmin changes
 
-  if (user === null) {
-    return <div className=" h-[80vh] flexCenter">Loading...</div>; 
+  if (!isUserAdmin) {
+    return <section className="flexCenter h-[80vh]">Access Denied.</section>; 
   }
 
   return (
-    <div>
-      <h2 className="text-center py-8"> All products </h2>
-    </div>
-  )
-}
+    <section className="min-h-[80vh] flexCenter">
+      <h2 className="text-center py-8">All products</h2>
+    </section>
+  );
+};
 
-export default Page
+export default Page;

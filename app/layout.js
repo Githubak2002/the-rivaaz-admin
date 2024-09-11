@@ -3,9 +3,9 @@ import "./globals.css";
 import NavBar from "./components/NavBar";
 
 // react hot toast
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
-
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,18 +25,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <section className="mx-auto max-w-7xl">
-        <NavBar />
-        {children}
-        </section>
-        {/* === toast === */}
-        <Toaster />
-        <Footer />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <section className="mx-auto max-w-7xl">
+            <NavBar />
+            {children}
+          </section>
+          {/* === toast === */}
+          <Toaster />
+          <Footer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
