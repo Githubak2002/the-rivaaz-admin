@@ -54,12 +54,12 @@ export default function Home() {
     <section className="flexCenter flex-col h-[80vh]">
       {/* <h2>Main page</h2> */}
 
-      <section className="mx-auto px-4 flexCenter flex-col gap-6 text-3xl font-bold">
+      <section className="mx-auto px-4 flex flex-col gap-6 sm:text-4xl text-2xl font-bold">
 
 
-        <h2>Wecome to The Rivaaz</h2>
         <h2>Style with Rivaaz</h2>
-
+        {/* <p>The Rivaaz</p> */}
+        <Link href="/sign-in" className="sm:text-xl text-lg text-blue-500">Sign In →</Link>
         {/* 
         <main className="sm:min-w-[340px] min-w-full shadow-2xl py-6 px-10 border-2 border-gray-300 mt-[5vh] rounded-xl font-bold text-sm">
           <form 
